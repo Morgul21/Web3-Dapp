@@ -3,8 +3,11 @@ import { useState } from 'react';
 import { put, takeEvery,all } from 'redux-saga/effects'
 import {BigNumber, ethers} from 'ethers'
 import { abifile } from './mynft.abi';
-const contractAddress = "0x907F7a5B87EFfDC7C6da6C1742fCFd1d818F9039"
+import { persistor } from "../index";
+import { useNavigate } from 'react-router-dom';
+import { contractAddress } from '../contracts/contractAddress';
 const addReceiver = "0x1bBFA1Bd92687A70B843218608DE6afb8F916Be7";
+
 //const tokenURI = "https://github.com/Bi0nicman/metadata/blob/7b0b045fc1356b36bd11ab9f347a95b7f05f45ab/metadata.json";
 interface NFTMETADATA {
     tokenId:string;
@@ -30,6 +33,7 @@ const ConnectWalletHandler = async () => {
     }
 }
 
+
 const getAllMintedNfts = async() => {
     var nftsmetadata:NFTMETADATA[] = [];
     try{
@@ -43,7 +47,6 @@ const getAllMintedNfts = async() => {
 
             let nftIDs = await nftContract.getAllTokens();
             
-           
             console.log("ids",nftIDs);
            
             for(const nftID of nftIDs){
@@ -54,13 +57,12 @@ const getAllMintedNfts = async() => {
                 });
             }
            return nftsmetadata
-            //return nfts;
-            //console.log(nfts);
         }
     }catch(error){
         console.log(error);
     }
 }
+
 
 const mintNftHandler = async (tokenUri,domainName) => {
     console.log("enter");
@@ -77,7 +79,7 @@ const mintNftHandler = async (tokenUri,domainName) => {
         console.log("3)nftContract: ",nftContract);
         console.log("Payment");
 
-        let nftToken = await nftContract.mintNFTPayable(tokenUri,domainName,{value:ethers.utils.parseEther("0.01")});
+        let nftToken = await nftContract.mintNFTPayable(tokenUri,domainName,{value:ethers.utils.parseEther("0.08")});
 
         console.log("NFT TOKEN", nftToken);
         console.log("Mining... please wait");
@@ -108,11 +110,15 @@ const getAccountBalance = async (account) =>  {
         }
 };
 
+
 export function* setAccount(){
     yield put({type:'SET',payload:yield ConnectWalletHandler()});
 }
 
+
 export function* setBalance(params){
+    
+    console.log("set balance",params.account);
     yield put({type:'GETVAL',payload:yield getAccountBalance(params.account)});
 }
 
@@ -138,7 +144,7 @@ export function* waitLogin() {
 }
 
 export function* waitBalance(){
-    //console.log("wait balance");
+    console.log("wait balance");
     yield takeEvery('GETBALANCE', setBalance)
 }
 
@@ -153,7 +159,7 @@ export default function* allMySagas(){
         waitLogin(),
         waitBalance(),
         waitMint(),
-        waitGetAllMintedNfts(),
+        waitGetAllMintedNfts()
     ]);
 }
 

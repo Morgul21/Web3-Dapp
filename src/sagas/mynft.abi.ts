@@ -163,19 +163,6 @@ export const abifile = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getAllTokensDomainName",
-    "outputs": [
-      {
-        "internalType": "string[]",
-        "name": "",
-        "type": "string[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -276,6 +263,19 @@ export const abifile = [
       }
     ],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "mintingFee",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -441,6 +441,19 @@ export const abifile = [
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "minimumEth",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMinPriceNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
         "name": "_tokenId",
         "type": "uint256"
       },
@@ -451,6 +464,24 @@ export const abifile = [
       }
     ],
     "name": "setNewDomain",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "newUri",
+        "type": "string"
+      }
+    ],
+    "name": "setNewURI",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -594,6 +625,13 @@ export const abifile = [
       }
     ],
     "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdraw",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

@@ -1,0 +1,14 @@
+.flexboxcontainer {
+    display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.flexboxcontainer::after {
+    content: "";
+    flex: auto;
+  }
+.item{
+    background: blue;
+}
+
